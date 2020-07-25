@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace WarspearToolX
         public static int startGold;
         public static IntPtr MWhandle;
         public static IntPtr CWhandle;
+        public static Color randomColor;
         public static bool token = true;
         public static int id;
         public static int f1;
@@ -23,9 +25,8 @@ namespace WarspearToolX
         public static int result;
         public static int health;
         public static int energy;
+        public static bool fEnemy = true;
 
-        public const UInt32 WM_KEYDOWN = 0x0100;
-        public const int VK_E = 0x45;
 
 
 

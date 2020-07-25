@@ -68,51 +68,93 @@ namespace WarspearToolX
                 variables.health = m.ReadInt(variables.healthAddress);
                 variables.energy = m.ReadInt(variables.energyAddress);
 
-                if (isGameActive() && checkBox2.Checked && variables.health > 700 && variables.energy > 99)
+                if (isGameActive() && checkBox2.Checked && variables.health > 700 && variables.health < 1900 && variables.energy > 99 && variables.fEnemy == true)
                 {
                     variables.token = true;
                     Thread.Sleep(5000);
-                    navigation.NAVIENEMY();
+                    navigation.NAVIENEMYCOMBS();
                     while (variables.token == true && isGameActive())
                     {
                         variables.id = m.ReadInt(variables.targetID);
-                        if (variables.id == 14)
+                        if (variables.id == 16 && isGameActive())
                         {
-                            SendKeys.SendWait("2");
-                            Thread.Sleep(rand.Next(150,200));
+                            Thread.Sleep(rand.Next(200, 250));
                             SendKeys.SendWait("{ENTER}");
-                            Thread.Sleep(rand.Next(100, 150));
-                            navigation.NAVIBACK();
-                            
+                            Thread.Sleep(rand.Next(200, 250));
+                            navigation.NAVIBACKCOMBS();
+                            Thread.Sleep(rand.Next(200, 250));
                             SendKeys.SendWait("{UP}");
-                            Thread.Sleep(rand.Next(150, 200));
+                            Thread.Sleep(rand.Next(200, 250));
                             while (variables.token == true && isGameActive())
                             {
                                 variables.id = m.ReadInt(textBox1.Text);
                                 Properties.Settings.Default.addy = textBox1.Text;
                                 Properties.Settings.Default.Save();
-                                if (variables.id > 1 && variables.id < 900)
+                                if (variables.id > 1 && variables.id < 1500 && isGameActive())
                                 {
                                     navigation.fight();
                                 }
-                                else if (variables.id == 0)
+                                else if (variables.id == 0 && isGameActive())
                                 {
                                     navigation.takeloot();
                                     variables.token = false;
+                                    variables.fEnemy = false;
                                 }
-                                Thread.Sleep(1);
+                                Thread.Sleep(5);
                             }
-                            Thread.Sleep(1);
+                            Thread.Sleep(5);
                         }
-                        Thread.Sleep(1);
+                        Thread.Sleep(5);
                     }
 
 
-                    Thread.Sleep(1);
+                    Thread.Sleep(5);
 
 
                 }
-                Thread.Sleep(1);
+                else if (isGameActive() && checkBox2.Checked && variables.health > 700 && variables.health < 1900 && variables.energy > 99 && variables.fEnemy == false)
+                {
+                    variables.token = true;
+                    Thread.Sleep(5000);
+                    navigation.NAVIENEMYCOMBSTWO();
+                    while (variables.token == true && isGameActive())
+                    {
+                        variables.id = m.ReadInt(variables.targetID);
+                        if (isGameActive() && variables.id == 16)
+                        {
+                            Thread.Sleep(rand.Next(225, 250));
+                            SendKeys.SendWait("2");
+                            Thread.Sleep(rand.Next(200, 250));
+                            SendKeys.SendWait("{ENTER}");
+                            Thread.Sleep(rand.Next(250, 450));
+                            while (variables.token == true && isGameActive())
+                            {
+                                variables.id = m.ReadInt(textBox1.Text);
+                                Properties.Settings.Default.addy = textBox1.Text;
+                                Properties.Settings.Default.Save();
+                                if ( isGameActive() && variables.id > 1 && variables.id < 900)
+                                {
+                                    Thread.Sleep(rand.Next(200, 250));
+                                    navigation.fightTWO();
+                                }
+                                else if (isGameActive() && variables.id == 0)
+                                {
+                                    
+                                    navigation.takelootCOMBS();
+                                    Thread.Sleep(rand.Next(4000, 5111));
+                                    navigation.NAVIBACKCOMBSTWO();
+                                    variables.token = false;
+                                    variables.fEnemy = true;
+                                }
+                                Thread.Sleep(5);
+                            }
+                            Thread.Sleep(5);
+                        }
+                        Thread.Sleep(5);
+                    }
+                    Thread.Sleep(5);
+                }
+                Thread.Sleep(5);
             }
         }
         
@@ -138,6 +180,7 @@ namespace WarspearToolX
                 Thread.Sleep(250);
                 try
                 {
+
                     label2.Text = m.ReadInt(variables.goldAddress).ToString();
 
                     label5.Text = m.ReadInt(variables.healthAddress).ToString();
@@ -148,6 +191,12 @@ namespace WarspearToolX
                     label3.Text = variables.result.ToString();
                     label7.Text = m.ReadInt(variables.energyAddress).ToString();
                     Thread.Sleep(250);
+                    if (checkBox1.Checked)
+                    {
+                        variables.randomColor = Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256));
+                        Thread.Sleep(250);
+                        this.BackColor = variables.randomColor;
+                    }
 
                 } catch
                 {
